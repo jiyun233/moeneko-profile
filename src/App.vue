@@ -102,6 +102,36 @@ html {
   --footer-bg: rgba(255, 255, 255, 0.8);
 }
 
+/*noinspection CssUnusedSymbol*/
+html.dark {
+  color-scheme: dark;
+  --page-surface: #111820;
+  --card-bg: rgba(21, 30, 39, 0.9);
+  --card-border: rgba(206, 221, 233, 0.16);
+  --card-border-hover: rgba(206, 221, 233, 0.3);
+  --card-shadow: rgba(0, 0, 0, 0.58);
+  --text-primary: #f0f5f8;
+  --text-secondary: #bdc9d2;
+  --text-tertiary: #91a1ad;
+  --track-bg: rgba(240, 245, 248, 0.12);
+  --btn-bg: rgba(240, 245, 248, 0.08);
+  --btn-border: rgba(240, 245, 248, 0.14);
+  --btn-hover-bg: rgba(240, 245, 248, 0.16);
+  --btn-text: #c2cdd5;
+  --btn-text-hover: #ffffff;
+  --icon-bg: rgba(240, 245, 248, 0.08);
+  --icon-color: #c4d0d8;
+  --icon-color-hover: #ffffff;
+  --avatar-border: rgba(240, 245, 248, 0.2);
+  --text-shadow-color: rgba(0, 0, 0, 0.35);
+  --fill-white: #d8e2e9;
+  --bg-brightness: 0.32;
+  --bg-saturation: 0.46;
+  --bg-contrast: 1.08;
+  --bg-overlay: rgba(8, 13, 18, 0.64);
+  --footer-bg: rgba(15, 23, 31, 0.86);
+}
+
 body {
   background: var(--page-surface);
   color: var(--text-primary);

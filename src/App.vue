@@ -23,10 +23,10 @@ const img = new Image()
 img.src = bgUrl
 img.onload = () => {
   isLoaded.value = true
-  document.documentElement.style.setProperty('--bg-url', `url(${bgUrl})`)
 }
 
 const theme = useThemeStore()
+provide('backgroundUrl', bgUrl)
 
 onMounted(() => {
   if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -44,7 +44,7 @@ watch(
 </script>
 
 <template>
-  <div class="app-wrapper" :style="{ '--bg-url': `url(${bgUrl})` }">
+  <div class="app-wrapper">
     <Transition name="page-fade">
       <LoadingAnimate v-if="showLoading" @close="handleClose" />
     </Transition>
@@ -72,52 +72,42 @@ html {
 }
 
 :root {
-  --card-bg: rgba(248, 247, 244, 0.62);
-  --card-border: rgba(0, 0, 0, 0.06);
-  --card-shadow: rgba(0, 0, 0, 0.04);
-  --text-primary: #1f1f1f;
-  --text-secondary: rgba(0, 0, 0, 0.58);
-  --text-tertiary: rgba(0, 0, 0, 0.42);
-  --track-bg: rgba(0, 0, 0, 0.07);
-  --btn-bg: rgba(0, 0, 0, 0.05);
-  --btn-border: rgba(0, 0, 0, 0.08);
-  --btn-hover-bg: rgba(0, 0, 0, 0.1);
-  --btn-text: rgba(0, 0, 0, 0.55);
-  --btn-text-hover: rgba(0, 0, 0, 0.8);
-  --icon-bg: rgba(0, 0, 0, 0.055);
-  --icon-color: rgba(0, 0, 0, 0.52);
-  --icon-color-hover: rgba(0, 0, 0, 0.75);
-  --avatar-border: rgba(0, 0, 0, 0.12);
-  --text-shadow-color: rgba(0, 0, 0, 0.04);
-  --fill-white: rgba(0, 0, 0, 0.55);
-  --bg-brightness: 1.15;
-}
-
-html.dark {
-  --card-bg: rgba(0, 0, 0, 0.18);
-  --card-border: rgba(255, 255, 255, 0.07);
-  --card-shadow: rgba(0, 0, 0, 0.25);
-  --text-primary: #fff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --text-tertiary: rgba(255, 255, 255, 0.45);
-  --track-bg: rgba(255, 255, 255, 0.08);
-  --btn-bg: rgba(255, 255, 255, 0.06);
-  --btn-border: rgba(255, 255, 255, 0.08);
-  --btn-hover-bg: rgba(255, 255, 255, 0.12);
-  --btn-text: rgba(255, 255, 255, 0.5);
-  --btn-text-hover: rgba(255, 255, 255, 0.9);
-  --icon-bg: rgba(255, 255, 255, 0.08);
-  --icon-color: rgba(255, 255, 255, 0.65);
-  --icon-color-hover: #fff;
-  --avatar-border: rgba(255, 255, 255, 0.25);
-  --text-shadow-color: rgba(0, 0, 0, 0.3);
-  --fill-white: #fff;
-  --bg-brightness: 0.65;
+  color-scheme: light;
+  --theme-duration: 520ms;
+  --theme-easing: cubic-bezier(0.22, 1, 0.36, 1);
+  --page-surface: #e5ebf0;
+  --card-bg: rgba(255, 255, 255, 0.86);
+  --card-border: rgba(48, 63, 78, 0.14);
+  --card-border-hover: rgba(48, 63, 78, 0.24);
+  --card-shadow: rgba(36, 50, 65, 0.2);
+  --text-primary: #1f2933;
+  --text-secondary: #52616f;
+  --text-tertiary: #71808e;
+  --track-bg: rgba(31, 41, 51, 0.12);
+  --btn-bg: rgba(31, 41, 51, 0.06);
+  --btn-border: rgba(31, 41, 51, 0.12);
+  --btn-hover-bg: rgba(31, 41, 51, 0.12);
+  --btn-text: #4d5c69;
+  --btn-text-hover: #17212b;
+  --icon-bg: rgba(31, 41, 51, 0.06);
+  --icon-color: #536371;
+  --icon-color-hover: #17212b;
+  --avatar-border: rgba(31, 41, 51, 0.14);
+  --text-shadow-color: rgba(36, 50, 65, 0.08);
+  --fill-white: #465664;
+  --bg-brightness: 1.08;
+  --bg-saturation: 0.66;
+  --bg-contrast: 0.92;
+  --bg-overlay: rgba(229, 235, 240, 0.48);
+  --footer-bg: rgba(255, 255, 255, 0.8);
 }
 
 body {
-  background: var(--card-bg);
+  background: var(--page-surface);
   color: var(--text-primary);
+  transition:
+    background-color var(--theme-duration) var(--theme-easing),
+    color var(--theme-duration) var(--theme-easing);
 }
 
 /*noinspection ALL*/
@@ -142,5 +132,7 @@ body {
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
+  background: var(--page-surface);
+  transition: background-color var(--theme-duration) var(--theme-easing);
 }
 </style>

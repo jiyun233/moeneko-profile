@@ -37,14 +37,13 @@ function cycleDescription() {
 }
 
 .site-avatar {
-  border: 2px solid var(--avatar-border);
+  border: 1px solid var(--avatar-border);
   box-shadow: 0 4px 24px var(--card-shadow);
-  transition: transform 0.3s ease, border-color 0.3s ease;
+  transition: transform 0.3s ease, box-shadow var(--theme-duration) var(--theme-easing);
 }
 
 .site-avatar:hover {
   transform: scale(1.05);
-  border-color: var(--text-secondary);
 }
 
 .site-name {
@@ -52,9 +51,10 @@ function cycleDescription() {
   font-weight: 700;
   color: var(--text-primary);
   margin: 0;
-  letter-spacing: 0.04em;
+  letter-spacing: 0;
   text-shadow: 0 2px 12px var(--text-shadow-color);
   user-select: none;
+  transition: color var(--theme-duration) var(--theme-easing), text-shadow var(--theme-duration) var(--theme-easing);
 }
 
 .site-desc {
@@ -62,7 +62,7 @@ function cycleDescription() {
   color: var(--text-secondary);
   margin: 0;
   cursor: pointer;
-  transition: color 0.3s ease, transform 0.3s ease;
+  transition: color var(--theme-duration) var(--theme-easing), transform 0.3s ease;
   user-select: none;
 }
 

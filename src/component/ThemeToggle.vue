@@ -13,8 +13,10 @@ const theme = useThemeStore()
     @click="theme.toggle()"
   >
     <n-icon size="18">
-      <WeatherMoon16Regular v-if="theme.dark" />
-      <BrightnessHigh16Regular v-else />
+      <Transition name="theme-icon" mode="out-in">
+        <BrightnessHigh16Regular v-if="theme.dark" key="light" />
+        <WeatherMoon16Regular v-else key="dark" />
+      </Transition>
     </n-icon>
   </n-button>
 </template>
@@ -24,15 +26,20 @@ const theme = useThemeStore()
   width: 38px;
   height: 38px;
   border: 1px solid var(--card-border) !important;
-  background: var(--card-bg) !important;
+  background-color: var(--card-bg) !important;
   backdrop-filter: blur(12px) saturate(160%);
   -webkit-backdrop-filter: blur(12px) saturate(160%);
-  box-shadow: 0 2px 12px var(--card-shadow);
+  box-shadow: 0 10px 24px -12px var(--card-shadow);
   color: var(--icon-color) !important;
-  transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.25s ease, box-shadow 0.3s ease !important;
+  transition:
+    background-color var(--theme-duration) var(--theme-easing),
+    color var(--theme-duration) var(--theme-easing),
+    transform 0.25s ease,
+    box-shadow var(--theme-duration) var(--theme-easing) !important;
 }
 
 .toggle:hover {
+  border-color: var(--card-border-hover) !important;
   color: var(--icon-color-hover) !important;
   transform: scale(1.08);
   box-shadow: 0 4px 20px var(--card-shadow);

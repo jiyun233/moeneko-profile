@@ -69,8 +69,7 @@ onUnmounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  min-height: 100dvh;
+  height: 100dvh;
   padding: clamp(16px, 3vmin, 32px);
   box-sizing: border-box;
   overflow-y: auto;
@@ -98,16 +97,30 @@ onUnmounted(() => {
 }
 
 .card {
-  background: var(--card-bg);
-  backdrop-filter: blur(16px) saturate(160%);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: var(--card-bg);
+  backdrop-filter: blur(18px) saturate(110%);
+  -webkit-backdrop-filter: blur(18px) saturate(110%);
   border: 1px solid var(--card-border);
-  border-radius: 20px;
+  border-radius: 8px;
   padding: clamp(20px, 3vmin, 28px);
-  box-shadow: 0 4px 24px var(--card-shadow);
+  box-shadow: 0 18px 40px -28px var(--card-shadow);
   animation: card-in 0.55s ease-out both;
   display: flex;
   justify-content: center;
+  transition:
+    background-color var(--theme-duration) var(--theme-easing),
+    transform 0.28s ease,
+    box-shadow var(--theme-duration) var(--theme-easing),
+    color var(--theme-duration) var(--theme-easing);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: var(--card-border-hover);
+  box-shadow: 0 24px 48px -28px var(--card-shadow);
 }
 
 .profile {
@@ -160,6 +173,7 @@ onUnmounted(() => {
   .overlay {
     align-items: flex-start;
     padding-top: 6vh;
+    padding-bottom: 88px;
   }
 
   .theme-toggle {
@@ -182,7 +196,7 @@ onUnmounted(() => {
 
   .card {
     padding: clamp(16px, 2.5vmin, 22px);
-    border-radius: 16px;
+    border-radius: 8px;
   }
 }
 
@@ -190,7 +204,7 @@ onUnmounted(() => {
   .overlay {
     align-items: flex-start;
     padding-top: clamp(36px, 6vh, 48px);
-    padding-bottom: clamp(8px, 2vh, 20px);
+    padding-bottom: 84px;
   }
 
   .grid {

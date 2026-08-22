@@ -68,6 +68,7 @@ onUnmounted(() => {
   justify-content: space-between;
   font-size: clamp(0.65rem, 1vw, 0.75rem);
   color: var(--text-tertiary);
+  transition: color var(--theme-duration) var(--theme-easing);
 }
 
 .progress-pct {

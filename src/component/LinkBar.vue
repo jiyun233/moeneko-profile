@@ -96,11 +96,21 @@ const iconMap: Record<SocialLink['icon'], typeof Code16Regular> = {
 .social-link {
   width: 38px;
   height: 38px;
+  background: var(--icon-bg) !important;
+  border: 1px solid transparent !important;
+  box-shadow: none !important;
   color: var(--icon-color) !important;
+  transition:
+    transform 0.22s ease,
+    background-color var(--theme-duration) var(--theme-easing),
+    color var(--theme-duration) var(--theme-easing) !important;
 }
 
 .social-link:hover {
+  background: var(--btn-hover-bg) !important;
+  border-color: var(--btn-border) !important;
   color: var(--icon-color-hover) !important;
+  transform: translateY(-2px);
 }
 
 .site-links {
@@ -111,12 +121,19 @@ const iconMap: Record<SocialLink['icon'], typeof Code16Regular> = {
 }
 
 .site-link {
+  background: var(--btn-bg) !important;
+  border: 1px solid var(--btn-border) !important;
+  box-shadow: none !important;
   color: var(--btn-text) !important;
-  border-color: var(--btn-border) !important;
+  transition:
+    transform 0.22s ease,
+    background-color var(--theme-duration) var(--theme-easing),
+    color var(--theme-duration) var(--theme-easing) !important;
 }
 
 .site-link:hover {
+  background: var(--btn-hover-bg) !important;
   color: var(--btn-text-hover) !important;
-  border-color: var(--btn-hover-bg) !important;
+  transform: translateY(-1px);
 }
 </style>

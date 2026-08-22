@@ -12,24 +12,37 @@
 <style scoped>
 .site-footer {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 12px;
+  left: 50%;
   z-index: 5;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
-  padding: clamp(6px, 1.5vh, 12px) clamp(8px, 2vw, 20px);
+  gap: 3px;
+  width: max-content;
+  max-width: calc(100% - 24px);
+  box-sizing: border-box;
+  transform: translateX(-50%);
+  padding: 9px 16px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  background-color: var(--footer-bg);
+  box-shadow: 0 16px 36px -22px var(--card-shadow);
+  backdrop-filter: blur(16px) saturate(110%);
+  -webkit-backdrop-filter: blur(16px) saturate(110%);
   text-align: center;
+  transition:
+    background-color var(--theme-duration) var(--theme-easing),
+    box-shadow var(--theme-duration) var(--theme-easing);
 }
 
 .site-footer p {
   margin: 0;
-  font-size: clamp(0.55rem, 0.9vw, 0.68rem);
-  line-height: 1.5;
-  color: var(--text-tertiary);
-  opacity: 0.7;
+  font-size: clamp(0.6rem, 0.8vw, 0.68rem);
+  line-height: 1.45;
+  color: var(--text-secondary);
+  opacity: 0.76;
+  transition: color var(--theme-duration) var(--theme-easing);
 }
 
 .icp {
@@ -42,14 +55,23 @@
 .icp a {
   color: inherit;
   text-decoration: none;
-  transition: opacity 0.2s ease;
+  transition: color 0.2s ease;
 }
 
 .icp a:hover {
-  opacity: 0.7;
+  color: var(--text-secondary);
 }
 
 .edgeone {
-  opacity: 0.45 !important;
+  color: var(--text-tertiary) !important;
+  opacity: 0.72 !important;
+}
+
+@media (max-width: 767px) {
+  .site-footer {
+    bottom: 8px;
+    max-width: calc(100% - 16px);
+    padding: 8px 12px;
+  }
 }
 </style>

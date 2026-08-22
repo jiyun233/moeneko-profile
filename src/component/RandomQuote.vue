@@ -33,9 +33,9 @@ onMounted(async () => {
   color: var(--text-secondary);
   margin: 0;
   line-height: 1.6;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
   opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease, color var(--theme-duration) var(--theme-easing);
 }
 
 .quote-text.show {
@@ -47,7 +47,7 @@ onMounted(async () => {
   color: var(--text-tertiary);
   margin: 0;
   opacity: 0;
-  transition: opacity 0.5s ease 0.15s;
+  transition: opacity 0.5s ease 0.15s, color var(--theme-duration) var(--theme-easing);
 }
 
 .quote-from.show {

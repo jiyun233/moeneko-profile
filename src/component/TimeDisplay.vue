@@ -38,16 +38,18 @@ onUnmounted(() => {
   font-size: clamp(2.4rem, 7vw, 4.2rem);
   font-weight: 300;
   color: var(--text-primary);
-  letter-spacing: 0.06em;
+  letter-spacing: 0;
   font-variant-numeric: tabular-nums;
   text-shadow: 0 2px 20px var(--text-shadow-color);
   user-select: none;
+  transition: color var(--theme-duration) var(--theme-easing), text-shadow var(--theme-duration) var(--theme-easing);
 }
 
 .time-date {
   font-size: clamp(0.75rem, 1.3vw, 0.92rem);
   color: var(--text-tertiary);
-  letter-spacing: 0.04em;
+  letter-spacing: 0;
   user-select: none;
+  transition: color var(--theme-duration) var(--theme-easing);
 }
 </style>

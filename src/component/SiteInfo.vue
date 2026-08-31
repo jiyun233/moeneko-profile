@@ -23,8 +23,10 @@ function cycleDescription() {
       :src="'/avatar.png'"
       class="site-avatar"
     />
-    <h1 class="site-name">{{ SITE_NAME }}</h1>
-    <p class="site-desc" @click="cycleDescription">{{ currentDesc }}</p>
+    <div class="site-text">
+      <h1 class="site-name">{{ SITE_NAME }}</h1>
+      <p class="site-desc" @click="cycleDescription">{{ currentDesc }}</p>
+    </div>
   </div>
 </template>
 
@@ -34,12 +36,22 @@ function cycleDescription() {
   flex-direction: column;
   align-items: center;
   gap: 12px;
+  min-width: 0;
+}
+
+.site-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
 }
 
 .site-avatar {
   border: 1px solid var(--avatar-border);
   box-shadow: 0 4px 24px var(--card-shadow);
   transition: transform 0.3s ease, box-shadow var(--theme-duration) var(--theme-easing);
+  flex-shrink: 0;
 }
 
 .site-avatar:hover {
@@ -54,6 +66,7 @@ function cycleDescription() {
   letter-spacing: 0;
   text-shadow: 0 2px 12px var(--text-shadow-color);
   user-select: none;
+  overflow-wrap: anywhere;
   transition: color var(--theme-duration) var(--theme-easing), text-shadow var(--theme-duration) var(--theme-easing);
 }
 
@@ -62,6 +75,8 @@ function cycleDescription() {
   color: var(--text-secondary);
   margin: 0;
   cursor: pointer;
+  overflow-wrap: anywhere;
+  text-align: center;
   transition: color var(--theme-duration) var(--theme-easing), transform 0.3s ease;
   user-select: none;
 }
@@ -73,5 +88,32 @@ function cycleDescription() {
 
 .site-desc:active {
   transform: scale(0.97);
+}
+
+/* 横屏手机 / 高度不足: 头像与文字横向排列, 压缩卡片高度 */
+@media (orientation: landscape) and (max-height: 620px) {
+  .site-info {
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .site-text {
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .site-avatar {
+    width: 56px !important;
+    height: 56px !important;
+  }
+
+  .site-name {
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+  }
+
+  .site-desc {
+    font-size: clamp(0.8rem, 1.4vw, 0.95rem);
+    text-align: left;
+  }
 }
 </style>

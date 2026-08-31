@@ -21,9 +21,13 @@ const bgs = [
 const bgUrl = `${Collections.getRandomItem(bgs)}`
 const img = new Image()
 img.src = bgUrl
-img.onload = () => {
+const markLoaded = () => {
   isLoaded.value = true
 }
+img.onload = markLoaded
+// 背景图加载失败或超时也不能卡死加载页
+img.onerror = markLoaded
+setTimeout(markLoaded, 6000)
 
 const theme = useThemeStore()
 provide('backgroundUrl', bgUrl)
@@ -48,7 +52,7 @@ watch(
     <Transition name="page-fade">
       <LoadingAnimate v-if="showLoading" @close="handleClose" />
     </Transition>
-    <n-config-provider :theme="theme.dark ? darkTheme : null">
+    <n-config-provider abstract :theme="theme.dark ? darkTheme : null">
       <n-notification-provider>
         <n-dialog-provider>
           <n-message-provider>
@@ -67,8 +71,12 @@ html {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
+  min-height: 100%;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 :root {
@@ -160,9 +168,17 @@ body {
 .app-wrapper {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100dvh;
   width: 100%;
   background: var(--page-surface);
   transition: background-color var(--theme-duration) var(--theme-easing);
+}
+
+/*noinspection ALL*/
+.app-wrapper > :deep(.n-config-provider) {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
 }
 </style>

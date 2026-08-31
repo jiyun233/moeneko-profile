@@ -78,4 +78,15 @@ onUnmounted(() => {
 .progress-bar {
   width: 100%;
 }
+
+/* 横屏矮窗口: 进度条更紧凑 */
+@media (orientation: landscape) and (max-height: 620px) {
+  .time-progress {
+    gap: 6px;
+  }
+
+  .progress-item {
+    gap: 3px;
+  }
+}
 </style>

@@ -12,7 +12,6 @@ import ThemeToggle from '@/component/ThemeToggle.vue'
 const notification = useNotification()
 
 onMounted(() => {
-  document.body.style.overflow = 'hidden'
   document.oncontextmenu = () => {
     notification.create({
       title: '提示',
@@ -26,7 +25,6 @@ onMounted(() => {
 
 onUnmounted(() => {
   document.oncontextmenu = null
-  document.body.style.overflow = ''
 })
 </script>
 
@@ -58,21 +56,22 @@ onUnmounted(() => {
 
 <style scoped>
 .main-page {
-  position: fixed;
-  inset: 0;
-  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .overlay {
-  position: relative;
-  z-index: 1;
+  flex: 1;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100dvh;
   padding: clamp(16px, 3vmin, 32px);
+  /* 顶部留出悬浮主题切换按钮的空间, 防止遮挡首张卡片 */
+  padding-top: max(clamp(16px, 3vmin, 32px), 64px);
+  padding-bottom: max(clamp(16px, 3vmin, 32px), 48px);
   box-sizing: border-box;
-  overflow-y: auto;
 }
 
 .theme-toggle {
@@ -82,18 +81,20 @@ onUnmounted(() => {
   z-index: 10;
 }
 
+/* 用 margin: auto 居中: 内容超出视口时可以自然滚动, 不会被裁剪 */
 .grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: auto auto auto;
+  grid-template-columns: 1fr;
   grid-template-areas:
-    'profile profile clock'
-    'quote quote quote'
-    'progress progress links';
-  gap: clamp(14px, 2.5vmin, 22px);
-  max-width: 900px;
+    'profile'
+    'clock'
+    'quote'
+    'progress'
+    'links';
+  gap: clamp(12px, 2.5vmin, 20px);
   width: 100%;
-  align-content: center;
+  max-width: 480px;
+  margin: auto;
 }
 
 .card {
@@ -105,11 +106,12 @@ onUnmounted(() => {
   -webkit-backdrop-filter: blur(18px) saturate(110%);
   border: 1px solid var(--card-border);
   border-radius: 8px;
-  padding: clamp(20px, 3vmin, 28px);
+  padding: clamp(16px, 3vmin, 28px);
   box-shadow: 0 18px 40px -28px var(--card-shadow);
   animation: card-in 0.55s ease-out both;
   display: flex;
   justify-content: center;
+  min-width: 0;
   transition:
     background-color var(--theme-duration) var(--theme-easing),
     transform 0.28s ease,
@@ -157,58 +159,67 @@ onUnmounted(() => {
   }
 }
 
-@media (max-width: 1023px) {
+/* 平板 / 横屏手机: 双列 */
+@media (min-width: 640px) {
   .grid {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto auto auto;
     grid-template-areas:
       'profile clock'
       'quote quote'
       'progress links';
-    max-width: 640px;
+    max-width: 680px;
   }
 }
 
-@media (max-width: 767px) {
-  .overlay {
-    align-items: flex-start;
-    padding-top: 6vh;
-    padding-bottom: 88px;
+/* 桌面: 三列 */
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas:
+      'profile profile clock'
+      'quote quote quote'
+      'progress progress links';
+    max-width: 920px;
+    gap: clamp(14px, 2.5vmin, 22px);
   }
+}
 
-  .theme-toggle {
-    top: clamp(8px, 2vmin, 16px);
-    right: clamp(8px, 2vmin, 16px);
+/* 横屏手机 / 高度不足的窗口: 紧凑间距, 尽量一屏放下 */
+@media (orientation: landscape) and (max-height: 620px) {
+  .overlay {
+    padding-top: max(clamp(12px, 2vmin, 24px), 52px);
+    padding-bottom: max(clamp(12px, 2vmin, 24px), 24px);
   }
 
   .grid {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    grid-template-areas:
-      'profile'
-      'clock'
-      'quote'
-      'progress'
-      'links';
-    max-width: 420px;
-    gap: clamp(12px, 2vmin, 18px);
+    gap: clamp(8px, 2vmin, 14px);
   }
 
   .card {
-    padding: clamp(16px, 2.5vmin, 22px);
-    border-radius: 8px;
+    padding: clamp(12px, 2.5vmin, 20px);
   }
 }
 
-@media (max-height: 600px) {
-  .overlay {
-    align-items: flex-start;
-    padding-top: clamp(36px, 6vh, 48px);
-    padding-bottom: 84px;
-  }
-
+/* 横屏矮窗口, 中等宽度: 保持两列 */
+@media (orientation: landscape) and (max-height: 620px) and (min-width: 480px) and (max-width: 719.98px) {
   .grid {
-    gap: clamp(8px, 2vh, 14px);
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      'profile clock'
+      'quote quote'
+      'progress links';
+    max-width: 680px;
+  }
+}
+
+/* 横屏矮窗口, 宽度充足: 紧凑三列两行, 避免滚动 */
+@media (orientation: landscape) and (max-height: 620px) and (min-width: 720px) {
+  .grid {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas:
+      'profile clock quote'
+      'progress progress links';
+    max-width: 920px;
   }
 }
 </style>

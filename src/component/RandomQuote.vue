@@ -24,7 +24,9 @@ onMounted(async () => {
   flex-direction: column;
   align-items: center;
   gap: 6px;
+  width: 100%;
   max-width: 480px;
+  min-width: 0;
   text-align: center;
 }
 
@@ -34,6 +36,7 @@ onMounted(async () => {
   margin: 0;
   line-height: 1.6;
   letter-spacing: 0;
+  overflow-wrap: anywhere;
   opacity: 0;
   transition: opacity 0.5s ease, color var(--theme-duration) var(--theme-easing);
 }

@@ -27,20 +27,21 @@ function goHome() {
 
 <style scoped>
 .not-found-page {
-  position: fixed;
-  inset: 0;
-  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .overlay {
-  position: relative;
-  z-index: 1;
+  flex: 1;
   display: flex;
   justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  min-height: 100dvh;
-  padding: 20px;
+  padding: clamp(16px, 3vmin, 32px);
+  padding-top: max(clamp(16px, 3vmin, 32px), 64px);
+  padding-bottom: max(clamp(16px, 3vmin, 32px), 48px);
   box-sizing: border-box;
 }
 
@@ -49,7 +50,8 @@ function goHome() {
   flex-direction: column;
   align-items: center;
   gap: clamp(12px, 2vmin, 20px);
-  padding: clamp(32px, 6vmin, 56px) clamp(28px, 6vw, 56px);
+  margin: auto;
+  padding: clamp(28px, 5vmin, 56px) clamp(24px, 6vw, 56px);
   border-radius: 24px;
   background: var(--card-bg);
   backdrop-filter: blur(20px) saturate(180%);

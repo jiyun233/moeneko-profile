@@ -11,9 +11,7 @@
 
 <style scoped>
 .site-footer {
-  position: fixed;
-  bottom: 12px;
-  left: 50%;
+  position: relative;
   z-index: 5;
   display: flex;
   flex-direction: column;
@@ -21,8 +19,9 @@
   gap: 3px;
   width: max-content;
   max-width: calc(100% - 24px);
+  margin: 0 auto clamp(10px, 2vmin, 16px);
   box-sizing: border-box;
-  transform: translateX(-50%);
+  flex-shrink: 0;
   padding: 9px 16px;
   border: 1px solid var(--card-border);
   border-radius: 8px;
@@ -38,11 +37,12 @@
 
 .site-footer p {
   margin: 0;
-  font-size: clamp(0.6rem, 0.8vw, 0.68rem);
-  line-height: 1.45;
+  font-size: clamp(0.65rem, 0.8vw, 0.7rem);
+  line-height: 1.5;
   color: var(--text-secondary);
   opacity: 0.76;
   transition: color var(--theme-duration) var(--theme-easing);
+  overflow-wrap: anywhere;
 }
 
 .icp {
@@ -69,9 +69,16 @@
 
 @media (max-width: 767px) {
   .site-footer {
-    bottom: 8px;
     max-width: calc(100% - 16px);
     padding: 8px 12px;
+  }
+}
+
+/* 横屏矮窗口: 页脚更紧凑, 把空间留给内容 */
+@media (orientation: landscape) and (max-height: 620px) {
+  .site-footer {
+    padding: 5px 14px;
+    gap: 2px;
   }
 }
 </style>

@@ -67,10 +67,8 @@ onUnmounted(() => {
 .overlay {
   flex: 1;
   display: flex;
-  padding: clamp(16px, 3vmin, 32px);
   /* 顶部留出悬浮主题切换按钮的空间, 防止遮挡首张卡片 */
-  padding-top: max(clamp(16px, 3vmin, 32px), 64px);
-  padding-bottom: max(clamp(16px, 3vmin, 32px), 48px);
+  padding: max(clamp(16px, 3vmin, 32px), 64px) clamp(16px, 3vmin, 32px) max(clamp(16px, 3vmin, 32px), 48px);
   box-sizing: border-box;
 }
 
@@ -107,13 +105,16 @@ onUnmounted(() => {
   border: 1px solid var(--card-border);
   border-radius: 8px;
   padding: clamp(16px, 3vmin, 28px);
-  box-shadow: 0 18px 40px -28px var(--card-shadow);
+  box-shadow:
+    inset 0 1px 0 var(--card-inset-highlight),
+    0 18px 40px -28px var(--card-shadow);
   animation: card-in 0.55s ease-out both;
   display: flex;
   justify-content: center;
   min-width: 0;
   transition:
     background-color var(--theme-duration) var(--theme-easing),
+    border-color var(--theme-duration) var(--theme-easing),
     transform 0.28s ease,
     box-shadow var(--theme-duration) var(--theme-easing),
     color var(--theme-duration) var(--theme-easing);
@@ -122,7 +123,9 @@ onUnmounted(() => {
 .card:hover {
   transform: translateY(-2px);
   border-color: var(--card-border-hover);
-  box-shadow: 0 24px 48px -28px var(--card-shadow);
+  box-shadow:
+    inset 0 1px 0 var(--card-inset-highlight),
+    0 24px 48px -28px var(--card-shadow);
 }
 
 .profile {
@@ -201,7 +204,7 @@ onUnmounted(() => {
 }
 
 /* 横屏矮窗口, 中等宽度: 保持两列 */
-@media (orientation: landscape) and (max-height: 620px) and (min-width: 480px) and (max-width: 719.98px) {
+@media (orientation: landscape) and (max-height: 620px) and (min-width: 480px) and (max-width: 720px) {
   .grid {
     grid-template-columns: 1fr 1fr;
     grid-template-areas:

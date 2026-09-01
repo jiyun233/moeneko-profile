@@ -79,6 +79,12 @@ onUnmounted(() => {
   width: 100%;
 }
 
+/*noinspection ALL*/
+.progress-bar :deep(.n-progress-graph-line-rail),
+.progress-bar :deep(.n-progress-graph-line-fill) {
+  transition: background-color var(--theme-duration) var(--theme-easing);
+}
+
 /* 横屏矮窗口: 进度条更紧凑 */
 @media (orientation: landscape) and (max-height: 620px) {
   .time-progress {

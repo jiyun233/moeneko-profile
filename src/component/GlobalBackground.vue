@@ -17,18 +17,12 @@ const backgroundUrl = inject<string>('backgroundUrl', '')
   inset: 0;
   overflow: hidden;
   background: var(--page-surface);
-  transition: background-color var(--theme-duration) var(--theme-easing);
-}
-
-.bg-image,
-.bg-layer::after {
-  content: '';
-  position: absolute;
-  pointer-events: none;
 }
 
 .bg-image {
+  position: absolute;
   inset: -4%;
+  pointer-events: none;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -39,11 +33,5 @@ const backgroundUrl = inject<string>('backgroundUrl', '')
     contrast(var(--bg-contrast));
   transform: scale(1.04);
   transition: filter var(--theme-duration) var(--theme-easing);
-}
-
-.bg-layer::after {
-  inset: 0;
-  background: var(--bg-overlay);
-  transition: background-color var(--theme-duration) var(--theme-easing);
 }
 </style>

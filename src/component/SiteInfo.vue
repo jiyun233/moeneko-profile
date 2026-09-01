@@ -50,7 +50,10 @@ function cycleDescription() {
 .site-avatar {
   border: 1px solid var(--avatar-border);
   box-shadow: 0 4px 24px var(--card-shadow);
-  transition: transform 0.3s ease, box-shadow var(--theme-duration) var(--theme-easing);
+  transition:
+    transform 0.3s ease,
+    border-color var(--theme-duration) var(--theme-easing),
+    box-shadow var(--theme-duration) var(--theme-easing);
   flex-shrink: 0;
 }
 

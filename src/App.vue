@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, provide, ref, watch } from 'vue'
+import { provide, ref, watch } from 'vue'
 import { darkTheme } from 'naive-ui'
 import { useThemeStore } from '@/stores/theme'
 import { Collections } from './utils/collections'
@@ -32,11 +32,10 @@ setTimeout(markLoaded, 6000)
 const theme = useThemeStore()
 provide('backgroundUrl', bgUrl)
 
-onMounted(() => {
-  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    theme.setDark(true)
-  }
-})
+// 首帧前确定主题, 避免暗色系统用户先看到亮色闪一下
+if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  theme.setDark(true)
+}
 
 watch(
   () => theme.dark,
@@ -83,31 +82,30 @@ html {
   color-scheme: light;
   --theme-duration: 520ms;
   --theme-easing: cubic-bezier(0.22, 1, 0.36, 1);
-  --page-surface: #e5ebf0;
-  --card-bg: rgba(255, 255, 255, 0.86);
-  --card-border: rgba(48, 63, 78, 0.14);
-  --card-border-hover: rgba(48, 63, 78, 0.24);
-  --card-shadow: rgba(36, 50, 65, 0.2);
+  --page-surface: #e8edf2;
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --card-border: rgba(70, 86, 105, 0.16);
+  --card-border-hover: rgba(70, 86, 105, 0.28);
+  --card-shadow: rgba(36, 50, 65, 0.22);
+  --card-inset-highlight: rgba(255, 255, 255, 0.75);
   --text-primary: #1f2933;
   --text-secondary: #52616f;
-  --text-tertiary: #71808e;
-  --track-bg: rgba(31, 41, 51, 0.12);
-  --btn-bg: rgba(31, 41, 51, 0.06);
-  --btn-border: rgba(31, 41, 51, 0.12);
-  --btn-hover-bg: rgba(31, 41, 51, 0.12);
-  --btn-text: #4d5c69;
+  --text-tertiary: #67757f;
+  --track-bg: rgba(70, 86, 105, 0.14);
+  --btn-bg: rgba(70, 86, 105, 0.07);
+  --btn-border: rgba(70, 86, 105, 0.14);
+  --btn-hover-bg: rgba(70, 86, 105, 0.13);
+  --btn-text: #4a5a68;
   --btn-text-hover: #17212b;
-  --icon-bg: rgba(31, 41, 51, 0.06);
+  --icon-bg: rgba(70, 86, 105, 0.07);
   --icon-color: #536371;
   --icon-color-hover: #17212b;
-  --avatar-border: rgba(31, 41, 51, 0.14);
+  --avatar-border: rgba(70, 86, 105, 0.16);
   --text-shadow-color: rgba(36, 50, 65, 0.08);
-  --fill-white: #465664;
-  --bg-brightness: 1.08;
-  --bg-saturation: 0.66;
-  --bg-contrast: 0.92;
-  --bg-overlay: rgba(229, 235, 240, 0.48);
-  --footer-bg: rgba(255, 255, 255, 0.8);
+  --bg-brightness: 1;
+  --bg-saturation: 0.95;
+  --bg-contrast: 1;
+  --footer-bg: rgba(255, 255, 255, 0.88);
 }
 
 /*noinspection CssUnusedSymbol*/
@@ -118,6 +116,7 @@ html.dark {
   --card-border: rgba(206, 221, 233, 0.16);
   --card-border-hover: rgba(206, 221, 233, 0.3);
   --card-shadow: rgba(0, 0, 0, 0.58);
+  --card-inset-highlight: rgba(255, 255, 255, 0.06);
   --text-primary: #f0f5f8;
   --text-secondary: #bdc9d2;
   --text-tertiary: #91a1ad;
@@ -132,11 +131,9 @@ html.dark {
   --icon-color-hover: #ffffff;
   --avatar-border: rgba(240, 245, 248, 0.2);
   --text-shadow-color: rgba(0, 0, 0, 0.35);
-  --fill-white: #d8e2e9;
-  --bg-brightness: 0.32;
-  --bg-saturation: 0.46;
-  --bg-contrast: 1.08;
-  --bg-overlay: rgba(8, 13, 18, 0.64);
+  --bg-brightness: 0.36;
+  --bg-saturation: 0.55;
+  --bg-contrast: 1.05;
   --footer-bg: rgba(15, 23, 31, 0.86);
 }
 

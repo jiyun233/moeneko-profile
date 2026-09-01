@@ -29,20 +29,25 @@ const theme = useThemeStore()
   background-color: var(--card-bg) !important;
   backdrop-filter: blur(12px) saturate(160%);
   -webkit-backdrop-filter: blur(12px) saturate(160%);
-  box-shadow: 0 10px 24px -12px var(--card-shadow);
   color: var(--icon-color) !important;
   transition:
     background-color var(--theme-duration) var(--theme-easing),
+    border-color var(--theme-duration) var(--theme-easing),
     color var(--theme-duration) var(--theme-easing),
     transform 0.25s ease,
     box-shadow var(--theme-duration) var(--theme-easing) !important;
+  box-shadow:
+    inset 0 1px 0 var(--card-inset-highlight),
+    0 10px 24px -12px var(--card-shadow);
 }
 
 .toggle:hover {
   border-color: var(--card-border-hover) !important;
   color: var(--icon-color-hover) !important;
   transform: scale(1.08);
-  box-shadow: 0 4px 20px var(--card-shadow);
+  box-shadow:
+    inset 0 1px 0 var(--card-inset-highlight),
+    0 4px 20px var(--card-shadow);
 }
 
 .toggle:active {

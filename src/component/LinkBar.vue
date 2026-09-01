@@ -103,6 +103,7 @@ const iconMap: Record<SocialLink['icon'], typeof Code16Regular> = {
   transition:
     transform 0.22s ease,
     background-color var(--theme-duration) var(--theme-easing),
+    border-color var(--theme-duration) var(--theme-easing),
     color var(--theme-duration) var(--theme-easing) !important;
 }
 
@@ -128,6 +129,7 @@ const iconMap: Record<SocialLink['icon'], typeof Code16Regular> = {
   transition:
     transform 0.22s ease,
     background-color var(--theme-duration) var(--theme-easing),
+    border-color var(--theme-duration) var(--theme-easing),
     color var(--theme-duration) var(--theme-easing) !important;
 }
 

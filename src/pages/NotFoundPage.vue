@@ -57,8 +57,15 @@ function goHome() {
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid var(--card-border);
-  box-shadow: 0 8px 40px var(--card-shadow);
+  box-shadow:
+    inset 0 1px 0 var(--card-inset-highlight),
+    0 8px 40px var(--card-shadow);
   animation: card-in 0.6s ease-out both;
+  transition:
+    background-color var(--theme-duration) var(--theme-easing),
+    border-color var(--theme-duration) var(--theme-easing),
+    box-shadow var(--theme-duration) var(--theme-easing),
+    color var(--theme-duration) var(--theme-easing);
 }
 
 .code {

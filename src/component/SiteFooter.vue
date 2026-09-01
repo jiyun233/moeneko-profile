@@ -26,12 +26,15 @@
   border: 1px solid var(--card-border);
   border-radius: 8px;
   background-color: var(--footer-bg);
-  box-shadow: 0 16px 36px -22px var(--card-shadow);
+  box-shadow:
+    inset 0 1px 0 var(--card-inset-highlight),
+    0 16px 36px -22px var(--card-shadow);
   backdrop-filter: blur(16px) saturate(110%);
   -webkit-backdrop-filter: blur(16px) saturate(110%);
   text-align: center;
   transition:
     background-color var(--theme-duration) var(--theme-easing),
+    border-color var(--theme-duration) var(--theme-easing),
     box-shadow var(--theme-duration) var(--theme-easing);
 }
 

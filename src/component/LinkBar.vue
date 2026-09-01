@@ -1,141 +1,129 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
-import { Code16Regular, Mail16Regular, MoviesAndTv16Regular } from '@vicons/fluent'
+import {
+  siGithub,
+  siBilibili,
+  siSteam,
+  siTelegram,
+  siDiscord,
+} from 'simple-icons'
+import { Mail16Regular } from '@vicons/fluent'
+import type { Component } from 'vue'
 
-interface SocialLink {
+interface LinkItem {
   label: string
   url: string
-  icon: 'github' | 'bilibili' | 'email'
+  color: string
+  path?: string
+  icon?: Component
 }
 
-interface SiteLink {
-  label: string
-  url: string
-}
-
-const router = useRouter()
-
-const socialLinks: SocialLink[] = [
-  { label: 'GitHub', url: 'https://github.com/jiyun233', icon: 'github' },
-  { label: 'Bilibili', url: 'https://space.bilibili.com/245830927', icon: 'bilibili' },
-  { label: 'Email', url: 'mailto:koishi@origin.pw', icon: 'email' },
+const links: LinkItem[] = [
+  { label: 'GitHub', url: 'https://github.com/jiyun233', color: siGithub.hex, path: siGithub.path },
+  { label: 'Bilbili', url: 'https://space.bilibili.com/245830927', color: siBilibili.hex, path: siBilibili.path },
+  { label: 'Discord', url: 'https://discord.com/users/ji_yun233', color: siDiscord.hex, path: siDiscord.path },
+  { label: 'Telegram', url: 'https://t.me/jiyun233', color: siTelegram.hex, path: siTelegram.path },
+  { label: 'Steam', url: 'https://steamcommunity.com/profiles/76561199086420886/', color: siSteam.hex, path: siSteam.path },
+  { label: 'Mail me', url: 'mailto:koishi@origin.pw', color: '536371', icon: Mail16Regular },
 ]
-
-const siteLinks: SiteLink[] = [
-  { label: '博客', url: '/blog' },
-  { label: '项目', url: '/projects' },
-  { label: '关于', url: '/about' },
-  { label: '友链', url: '/links' },
-]
-
-function navigate(url: string) {
-  if (url.startsWith('/')) {
-    router.push(url)
-  } else if (url.startsWith('http')) {
-    window.open(url, '_blank', 'noopener,noreferrer')
-  }
-}
-
-const iconMap: Record<SocialLink['icon'], typeof Code16Regular> = {
-  github: Code16Regular,
-  bilibili: MoviesAndTv16Regular,
-  email: Mail16Regular,
-}
 </script>
 
 <template>
   <div class="link-bar">
-    <div class="social-links">
-      <n-button
-        v-for="link in socialLinks"
-        :key="link.label"
-        circle
-        quaternary
-        class="social-link"
-        tag="a"
-        :href="link.url"
-        target="_blank"
-        rel="noopener noreferrer"
-        :title="link.label"
-        :external="link.icon !== 'email'"
-      >
-        <n-icon size="18">
-          <component :is="iconMap[link.icon]" />
+    <a
+      v-for="link in links"
+      :key="link.label"
+      :href="link.url"
+      :target="link.url.startsWith('mailto:') ? undefined : '_blank'"
+      :rel="link.url.startsWith('mailto:') ? undefined : 'noopener noreferrer'"
+      class="link-item"
+      :style="{ '--brand': '#' + link.color }"
+    >
+      <span class="link-icon">
+        <svg v-if="link.path" viewBox="0 0 24 24" class="brand-svg">
+          <path :d="link.path" fill="currentColor" />
+        </svg>
+        <n-icon v-else size="20">
+          <component :is="link.icon" />
         </n-icon>
-      </n-button>
-    </div>
-    <div class="site-links">
-      <n-button
-        v-for="link in siteLinks"
-        :key="link.label"
-        secondary
-        round
-        size="small"
-        class="site-link"
-        @click="navigate(link.url)"
-      >
-        {{ link.label }}
-      </n-button>
-    </div>
+      </span>
+      <span class="link-label">{{ link.label }}</span>
+    </a>
   </div>
 </template>
 
 <style scoped>
 .link-bar {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(8px, 2vmin, 14px);
+  width: 100%;
+}
+
+.link-item {
+  --brand: #6f83a0; /* 默认雾蓝中间色, 会被模板 :style 覆盖 */
+  display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 6px;
+  width: 56px;
+  text-decoration: none;
+  color: var(--icon-color);
+  cursor: pointer;
 }
 
-.social-links {
-  display: flex;
-  gap: 18px;
-}
-
-.social-link {
+.link-icon {
   width: 38px;
   height: 38px;
-  background: var(--icon-bg) !important;
-  border: 1px solid transparent !important;
-  box-shadow: none !important;
-  color: var(--icon-color) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--icon-bg);
+  border: 1px solid transparent;
+  border-radius: 50%;
+  color: var(--icon-color);
   transition:
     transform 0.22s ease,
+    color 0.22s ease,
     background-color var(--theme-duration) var(--theme-easing),
-    border-color var(--theme-duration) var(--theme-easing),
-    color var(--theme-duration) var(--theme-easing) !important;
+    border-color var(--theme-duration) var(--theme-easing);
 }
 
-.social-link:hover {
-  background: var(--btn-hover-bg) !important;
-  border-color: var(--btn-border) !important;
-  color: var(--icon-color-hover) !important;
+.brand-svg {
+  width: 20px;
+  height: 20px;
+}
+
+.link-item:hover .link-icon {
+  color: color-mix(in srgb, var(--brand) 65%, var(--icon-color-hover));
+  background: var(--btn-hover-bg);
+  border-color: var(--btn-border);
   transform: translateY(-2px);
 }
 
-.site-links {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  justify-content: center;
+.link-label {
+  font-size: clamp(0.65rem, 1.2vw, 0.75rem);
+  color: var(--btn-text);
+  transition: color 0.2s ease;
 }
 
-.site-link {
-  background: var(--btn-bg) !important;
-  border: 1px solid var(--btn-border) !important;
-  box-shadow: none !important;
-  color: var(--btn-text) !important;
-  transition:
-    transform 0.22s ease,
-    background-color var(--theme-duration) var(--theme-easing),
-    border-color var(--theme-duration) var(--theme-easing),
-    color var(--theme-duration) var(--theme-easing) !important;
+.link-item:hover .link-label {
+  color: var(--btn-text-hover);
 }
 
-.site-link:hover {
-  background: var(--btn-hover-bg) !important;
-  color: var(--btn-text-hover) !important;
-  transform: translateY(-1px);
+@media (max-width: 767px) {
+  .link-item {
+    width: 52px;
+  }
+
+  .link-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .brand-svg {
+    width: 18px;
+    height: 18px;
+  }
 }
 </style>

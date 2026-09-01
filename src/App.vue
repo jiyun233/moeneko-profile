@@ -4,6 +4,7 @@ import { darkTheme } from 'naive-ui'
 import { useThemeStore } from '@/stores/theme'
 import { Collections } from './utils/collections'
 import LoadingAnimate from './component/LoadingAnimate.vue'
+import SiteNav from './component/SiteNav.vue'
 import SiteFooter from './component/SiteFooter.vue'
 
 const showLoading = ref(true)
@@ -55,6 +56,7 @@ watch(
       <n-notification-provider>
         <n-dialog-provider>
           <n-message-provider>
+            <SiteNav />
             <RouterView />
             <SiteFooter />
           </n-message-provider>

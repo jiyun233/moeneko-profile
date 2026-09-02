@@ -19,7 +19,7 @@ interface LinkItem {
 
 const links: LinkItem[] = [
   { label: 'GitHub', url: 'https://github.com/jiyun233', color: siGithub.hex, path: siGithub.path },
-  { label: 'Bilbili', url: 'https://space.bilibili.com/245830927', color: siBilibili.hex, path: siBilibili.path },
+  { label: 'bilibili', url: 'https://space.bilibili.com/245830927', color: siBilibili.hex, path: siBilibili.path },
   { label: 'Discord', url: 'https://discord.com/users/ji_yun233', color: siDiscord.hex, path: siDiscord.path },
   { label: 'Telegram', url: 'https://t.me/jiyun233', color: siTelegram.hex, path: siTelegram.path },
   { label: 'Steam', url: 'https://steamcommunity.com/profiles/76561199086420886/', color: siSteam.hex, path: siSteam.path },

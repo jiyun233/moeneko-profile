@@ -42,48 +42,58 @@ function onLeave() {
 </script>
 
 <template>
-  <nav
-    class="site-nav"
-    :class="{ expanded }"
+  <!-- 外层 wrapper 只负责居中定位, 不做动画, 保证生产/本地行为一致 -->
+  <div
+    class="site-nav-wrapper"
     @mouseenter="onEnter"
     @mouseleave="onLeave"
   >
-    <button
-      class="nav-trigger"
-      :aria-expanded="expanded"
-      aria-label="切换导航菜单"
-      @click="onTriggerClick"
+    <nav
+      class="site-nav"
+      :class="{ expanded }"
     >
-      <span class="hamburger" :class="{ open: expanded }">
-        <span></span>
-        <span></span>
-        <span></span>
-      </span>
-    </button>
-    <div class="nav-items">
       <button
-        v-for="(link, i) in siteLinks"
-        :key="link.label"
-        class="nav-item"
-        :style="{ '--item-index': i }"
-        @click="navigate(link.url)"
+        class="nav-trigger"
+        :aria-expanded="expanded"
+        aria-label="切换导航菜单"
+        @click="onTriggerClick"
       >
-        {{ link.label }}
+        <span class="hamburger" :class="{ open: expanded }">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
       </button>
-    </div>
-  </nav>
+      <div class="nav-items">
+        <button
+          v-for="(link, i) in siteLinks"
+          :key="link.label"
+          class="nav-item"
+          :style="{ '--item-index': i }"
+          @click="navigate(link.url)"
+        >
+          {{ link.label }}
+        </button>
+      </div>
+    </nav>
+  </div>
 </template>
 
 <style scoped>
-/* 与底部备案号 footer 同款设计: 圆角卡片 + 玻璃质感 */
-/* 展开时从水平中央向四周(除上) 同时扩大:
-   顶边固定不动, 左右两侧对称外扩, 底边向下延伸 */
-.site-nav {
+/* wrapper: 唯一职责 → 把导航固定到顶部居中, 永远不参与动画 */
+.site-nav-wrapper {
   position: fixed;
   top: clamp(12px, 2.5vmin, 24px);
   left: 50%;
-  translate: -50% 0;
+  transform: translateX(-50%);
   z-index: 10;
+  display: block;
+}
+
+/* 内层卡片: 只做视觉 + 扩大动画, 不参与定位 */
+/* 展开时从水平中央向四周(除上) 同时扩大:
+   顶边固定不动, 左右两侧对称外扩, 底边向下延伸 */
+.site-nav {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -245,8 +255,11 @@ function onLeave() {
 
 /* 横屏矮窗口: 更紧凑, 把空间留给内容 */
 @media (orientation: landscape) and (max-height: 620px) {
-  .site-nav {
+  .site-nav-wrapper {
     top: clamp(10px, 2vmin, 18px);
+  }
+
+  .site-nav {
     padding: 3px 10px;
     gap: 2px;
   }

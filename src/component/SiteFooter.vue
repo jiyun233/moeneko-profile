@@ -58,10 +58,10 @@ onUnmounted(() => {
     </p>
     <div class="meta-row">
       <span class="copyright">© 2026 Moe Jiyun233. All Rights Reserved.</span>
-      <span class="version-pill">#{{ appVersion }}</span>
     </div>
     <p class="footer-sub">
-      Site Secured &amp; Accelerated by Tencent Cloud EdgeOne · Pages · Security · CDN
+      <span class="version-pill">#{{ appVersion }}</span>
+      <span class="edgeone">· Site Secured &amp; Accelerated by Tencent Cloud EdgeOne · Pages · Security · CDN</span>
     </p>
   </footer>
 </template>
@@ -72,13 +72,14 @@ onUnmounted(() => {
   z-index: 5;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  width: clamp(320px, 78vw, 680px);
+  align-items: center;
+  gap: 0; /* 收缩态无间距, 保证只有 ICP 一行时它在 padding 正中 */
+  width: clamp(280px, 60vw, 520px);
   max-width: calc(100% - 24px);
   margin: 0 auto clamp(10px, 2vmin, 16px);
   box-sizing: border-box;
   flex-shrink: 0;
-  padding: 6px 18px;
+  padding: 6px 16px;
   border: 1px solid var(--card-border);
   border-radius: 8px;
   background-color: var(--footer-bg);
@@ -92,21 +93,26 @@ onUnmounted(() => {
     transform var(--theme-duration) var(--theme-easing),
     background-color var(--theme-duration) var(--theme-easing),
     border-color var(--theme-duration) var(--theme-easing),
-    box-shadow var(--theme-duration) var(--theme-easing);
+    box-shadow var(--theme-duration) var(--theme-easing),
+    gap var(--theme-duration) var(--theme-easing);
 }
 
+/* 展开态: 升起 + 投影加深 + 恢复行间间距 */
 .site-footer.expanded {
-  padding: 10px 22px;
+  padding: 10px 20px;
+  gap: 4px;
   transform: translateY(-2px);
   box-shadow:
     inset 0 1px 0 var(--card-inset-highlight),
     0 22px 48px -24px var(--card-shadow);
 }
 
+/* ICP 行: 不设 width:100%, 让盒子宽度 = 两链接+gap 的真实内容宽,
+   再由父 footer 的 align-items:center 把这一整块精确放在卡片正中,
+   避免"撑满 100% 再 justify-content:center"被两侧空留白稀释中心感 */
 .icp-row {
   margin: 0;
-  width: 100%;
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
@@ -129,49 +135,60 @@ onUnmounted(() => {
 }
 
 .meta-row {
-  width: 100%;
+  align-self: stretch;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  gap: 12px;
   font-size: clamp(0.65rem, 0.8vw, 0.72rem);
   line-height: 1.5;
   color: var(--text-secondary);
 }
 
 .copyright {
-  text-align: left;
+  text-align: center;
   color: inherit;
   opacity: 0.76;
   min-width: 0;
   overflow-wrap: anywhere;
-  hyphens: auto;
 }
 
 .version-pill {
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.92em;
-  padding: 2px 8px;
+  padding: 1px 8px;
   border: 1px solid color-mix(in srgb, var(--card-border) 80%, transparent);
   border-radius: 999px;
   background: color-mix(in srgb, var(--footer-bg) 60%, transparent);
   letter-spacing: 0.02em;
   color: inherit;
-  opacity: 0.74;
+  opacity: 0.78;
   white-space: nowrap;
 }
 
+/* 第 3 行: 版本号 pill + EdgeOne 标语同一行居中, 用 · 间隔 */
 .footer-sub {
   margin: 0;
-  width: 100%;
+  align-self: stretch;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
   font-size: calc(clamp(0.65rem, 0.8vw, 0.7rem) * 0.92);
   line-height: 1.5;
   color: var(--text-tertiary, var(--text-secondary));
-  text-align: center;
   opacity: 0.72;
   transition: color var(--theme-duration) var(--theme-easing);
   overflow-wrap: anywhere;
+}
+
+.edgeone {
+  text-align: center;
+  color: inherit;
+  opacity: 0.98;
 }
 
 .site-footer .meta-row,
@@ -202,36 +219,31 @@ onUnmounted(() => {
   .site-footer {
     width: auto;
     max-width: calc(100% - 16px);
-    padding: 5px 14px;
-    gap: 3px;
+    padding: 5px 12px;
+    gap: 0;
   }
 
   .site-footer.expanded {
-    padding: 9px 16px;
-  }
-
-  .meta-row {
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .version-pill {
-    align-self: flex-start;
+    padding: 9px 14px;
+    gap: 3px;
   }
 
   .footer-sub {
     font-size: calc(clamp(0.65rem, 0.8vw, 0.7rem) * 0.88);
+    gap: 4px;
   }
 }
 
+/* 横屏矮窗口: 更紧凑 */
 @media (orientation: landscape) and (max-height: 620px) {
   .site-footer {
-    padding: 4px 16px;
-    gap: 2px;
+    padding: 4px 14px;
+    gap: 0;
   }
 
   .site-footer.expanded {
-    padding: 7px 18px;
+    padding: 7px 16px;
+    gap: 2px;
   }
 }
 </style>

@@ -52,12 +52,12 @@ onUnmounted(() => {
     @mouseenter="onEnter"
     @mouseleave="onLeave"
   >
-    <div class="footer-grid">
+    <p class="icp-row">
+      <a href="https://icp.gov.moe" target="_blank" rel="noopener noreferrer">萌ICP备20269527号</a>
+      <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer">闽ICP备2026006101号-1</a>
+    </p>
+    <div class="meta-row">
       <span class="copyright">© 2026 Moe Jiyun233. All Rights Reserved.</span>
-      <span class="icp">
-        <a href="https://icp.gov.moe" target="_blank" rel="noopener noreferrer">萌ICP备20269527号</a>
-        <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer">闽ICP备2026006101号-1</a>
-      </span>
       <span class="version-pill">#{{ appVersion }}</span>
     </div>
     <p class="footer-sub">
@@ -67,7 +67,6 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-/* 与 SiteNav 对称的同款玻璃卡片 */
 .site-footer {
   position: relative;
   z-index: 5;
@@ -96,7 +95,6 @@ onUnmounted(() => {
     box-shadow var(--theme-duration) var(--theme-easing);
 }
 
-/* 展开态: 升起 + 投影加深 (与 SiteNav 方向对称) */
 .site-footer.expanded {
   padding: 10px 22px;
   transform: translateY(-2px);
@@ -105,69 +103,68 @@ onUnmounted(() => {
     0 22px 48px -24px var(--card-shadow);
 }
 
-/* 主行: 三列分栏 (版权 / ICP 主信息 / 版本号) */
-.footer-grid {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: clamp(8px, 2vw, 20px);
+.icp-row {
+  margin: 0;
   width: 100%;
-  font-size: clamp(0.65rem, 0.8vw, 0.72rem);
-  line-height: 1.5;
-  color: var(--text-secondary);
-}
-
-/* 版权 (左列) */
-.copyright {
-  justify-self: start;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-  color: inherit;
-  opacity: 0.76;
-}
-
-/* ICP (中列) */
-.icp {
-  justify-self: center;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   gap: clamp(6px, 1.5vw, 14px);
-  color: inherit;
-  opacity: 0.88; /* ICP 是主信息, 比版权/版本号更亮一点 */
+  font-size: clamp(0.65rem, 0.8vw, 0.72rem);
+  line-height: 1.5;
+  color: var(--text-secondary);
+  opacity: 0.9;
 }
 
-.icp a {
+.icp-row a {
   color: inherit;
   text-decoration: none;
   transition: color 0.2s ease, opacity 0.2s ease;
 }
 
-.icp a:hover {
+.icp-row a:hover {
   opacity: 1;
   color: var(--text-primary);
 }
 
-/* 版本号 (右列): 小 pill, 等宽, 工程风 */
+.meta-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font-size: clamp(0.65rem, 0.8vw, 0.72rem);
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.copyright {
+  text-align: left;
+  color: inherit;
+  opacity: 0.76;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+
 .version-pill {
-  justify-self: end;
+  flex-shrink: 0;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 0.9em;
+  font-size: 0.92em;
   padding: 2px 8px;
   border: 1px solid color-mix(in srgb, var(--card-border) 80%, transparent);
   border-radius: 999px;
   background: color-mix(in srgb, var(--footer-bg) 60%, transparent);
   letter-spacing: 0.02em;
   color: inherit;
-  opacity: 0.72;
+  opacity: 0.74;
+  white-space: nowrap;
 }
 
-/* 次行: EdgeOne 标语 */
 .footer-sub {
   margin: 0;
+  width: 100%;
   font-size: calc(clamp(0.65rem, 0.8vw, 0.7rem) * 0.92);
   line-height: 1.5;
   color: var(--text-tertiary, var(--text-secondary));
@@ -177,9 +174,7 @@ onUnmounted(() => {
   overflow-wrap: anywhere;
 }
 
-/* 折叠态: 隐藏版权 / 版本号 / 次行, 只保留 ICP (三列网格仍工作) */
-.site-footer .copyright,
-.site-footer .version-pill,
+.site-footer .meta-row,
 .site-footer .footer-sub {
   max-height: 0;
   opacity: 0;
@@ -188,66 +183,40 @@ onUnmounted(() => {
   transition:
     max-height var(--theme-duration) var(--theme-easing),
     opacity 0.4s var(--theme-easing),
-    color var(--theme-duration) var(--theme-easing),
-    padding 0.25s var(--theme-easing),
-    border-color 0.25s var(--theme-easing);
+    color var(--theme-duration) var(--theme-easing);
 }
 
-/* 展开态: 版权恢复 */
-.site-footer.expanded .copyright {
-  max-height: 2.5em;
-  opacity: 0.76;
+.site-footer.expanded .meta-row {
+  max-height: 3.2em;
+  opacity: 1;
   pointer-events: auto;
 }
 
-/* 展开态: 版本号 pill 恢复 */
-.site-footer.expanded .version-pill {
-  max-height: 2.2em;
-  opacity: 0.72;
-  pointer-events: auto;
-}
-
-/* 展开态: 次行 EdgeOne 恢复 */
 .site-footer.expanded .footer-sub {
-  max-height: 2.5em;
+  max-height: 2.6em;
   opacity: 0.7;
   pointer-events: auto;
 }
 
-/* 窄屏: 三列变两行 → ICP 单独一行居中, 版权+版本号一行两端 */
 @media (max-width: 767px) {
   .site-footer {
     width: auto;
     max-width: calc(100% - 16px);
     padding: 5px 14px;
+    gap: 3px;
   }
 
   .site-footer.expanded {
     padding: 9px 16px;
   }
 
-  .footer-grid {
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-      "icp     icp"
-      "copy    ver";
-    gap: 4px;
-  }
-
-  .copyright {
-    grid-area: copy;
-    justify-self: start;
-    font-size: 0.95em;
-  }
-
-  .icp {
-    grid-area: icp;
-    justify-self: center;
+  .meta-row {
+    align-items: flex-start;
+    gap: 8px;
   }
 
   .version-pill {
-    grid-area: ver;
-    justify-self: end;
+    align-self: flex-start;
   }
 
   .footer-sub {
@@ -255,7 +224,6 @@ onUnmounted(() => {
   }
 }
 
-/* 横屏矮窗口: 更紧凑 */
 @media (orientation: landscape) and (max-height: 620px) {
   .site-footer {
     padding: 4px 16px;

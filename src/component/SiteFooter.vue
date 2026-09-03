@@ -58,10 +58,10 @@ onUnmounted(() => {
     </p>
     <div class="meta-row">
       <span class="copyright">© 2026 Moe Jiyun233. All Rights Reserved.</span>
+      <span class="version-pill">#{{ appVersion }}</span>
     </div>
     <p class="footer-sub">
-      <span class="version-pill">#{{ appVersion }}</span>
-      <span class="edgeone">· Site Secured &amp; Accelerated by Tencent Cloud EdgeOne · Pages · Security · CDN</span>
+      <span class="edgeone">Site Secured &amp; Accelerated by Tencent Cloud EdgeOne · Pages · Security · CDN</span>
     </p>
   </footer>
 </template>
@@ -97,7 +97,6 @@ onUnmounted(() => {
     gap var(--theme-duration) var(--theme-easing);
 }
 
-/* 展开态: 升起 + 投影加深 + 恢复行间间距 */
 .site-footer.expanded {
   padding: 10px 20px;
   gap: 4px;
@@ -107,9 +106,6 @@ onUnmounted(() => {
     0 22px 48px -24px var(--card-shadow);
 }
 
-/* ICP 行: 不设 width:100%, 让盒子宽度 = 两链接+gap 的真实内容宽,
-   再由父 footer 的 align-items:center 把这一整块精确放在卡片正中,
-   避免"撑满 100% 再 justify-content:center"被两侧空留白稀释中心感 */
 .icp-row {
   margin: 0;
   display: inline-flex;
@@ -137,8 +133,10 @@ onUnmounted(() => {
 .meta-row {
   align-self: stretch;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  gap: 8px; /* 版权与版本号之间的间隔, 两者加起来作为整体居中 */
   font-size: clamp(0.65rem, 0.8vw, 0.72rem);
   line-height: 1.5;
   color: var(--text-secondary);

@@ -61,7 +61,7 @@ const links: LinkItem[] = [
 }
 
 .link-item {
-  --brand: #6f83a0; /* 默认雾蓝中间色, 会被模板 :style 覆盖 */
+  --brand: #6f83a0;
   display: flex;
   flex-direction: column;
   align-items: center;
